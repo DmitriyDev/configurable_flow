@@ -1,0 +1,31 @@
+App\Steps\IncrementStep: &IncrementStep
+  class: App\Steps\IncrementStep
+  dependencies: []
+
+App\Steps\DecrementStep: &DecrementStep
+  class: App\Steps\DecrementStep
+  dependencies: []
+
+
+calculate_thread: &calculate_thread
+  class: App\Thread\CalculationThread
+  context: App\Context\CalculationContextComposite
+  steps:
+    - *IncrementStep
+    - *DecrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+
+
+calculate_thread_two:
+  class: App\Thread\CalculationThread
+  context: App\Context\CalculationContextComposite
+  steps:
+    - *calculate_thread
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *DecrementStep
