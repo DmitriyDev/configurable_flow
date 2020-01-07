@@ -31,6 +31,10 @@ Any flow can be divided into such components:
       class: App\Steps\DecrementStep
       dependencies: []
     
+    App\Steps\NotProcessedStep: &NotProcessedStep
+      class: App\Steps\NotProcessedStep
+      dependencies: []
+    
     calculate_thread: &calculate_thread
       class: App\Thread\CalculationThread
       context: App\Context\CalculationContextComposite
@@ -38,9 +42,12 @@ Any flow can be divided into such components:
         - *IncrementStep
         - *DecrementStep
         - *IncrementStep
+        - *NotProcessedStep
+        - *IncrementStep
+        - *NotProcessedStep
         - *IncrementStep
         - *IncrementStep
-        - *IncrementStep
+    
     
     calculate_thread_two:
       class: App\Thread\CalculationThread
@@ -49,9 +56,11 @@ Any flow can be divided into such components:
         - *calculate_thread
         - *IncrementStep
         - *IncrementStep
+        - *NotProcessedStep
         - *IncrementStep
         - *IncrementStep
         - *DecrementStep
+
 
 
 Here we can see that `calculate_thread` contains only threads, but `calculate_thread_two` call `calculate_thread` as a first step.
