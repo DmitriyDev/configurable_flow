@@ -5,8 +5,7 @@ Basic implementation of execution flow, described in config file
 
 `Workflow` folder contains reusable interfaces and processing
 
-
-*Basic example of config*
+--- 
 
 **Main idea:** 
 
@@ -19,6 +18,15 @@ Any flow can be divided into such components:
 **Context** - Composite immutable object that contains data for specific thread and steps.
 
 **State** - Mutable object that will be changes during thread processing.
+
+---
+
+**Final idea:**
+
+Request as a context
+Response as a state
+
+---
 
 **Basic config file that describes flow (example: flowConfig.yml):** 
     
@@ -45,6 +53,7 @@ Any flow can be divided into such components:
         - *NotProcessedStep
         - *IncrementStep
         - *NotProcessedStep
+        - *BrokenStep
         - *IncrementStep
         - *IncrementStep
     
@@ -91,34 +100,84 @@ Output:
      === Start Thread === 
     Result: 40
     History: 
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Decrement step          Success
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Non-processable step            Skipped
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Non-processable step            Skipped
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Calculate thread                Success
+    - 2020-01-07 17:33:11   Calculate thread        Created         
+    - 2020-01-07 17:33:11   Calculate thread        In progress             
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Decrement step  Created         
+    - 2020-01-07 17:33:11   Decrement step  In progress             
+    - 2020-01-07 17:33:11   Decrement step  Success         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Non-processable step    Created         
+    - 2020-01-07 17:33:11   Non-processable step    Skipped         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Non-processable step    Created         
+    - 2020-01-07 17:33:11   Non-processable step    Skipped         
+    - 2020-01-07 17:33:11   Broken step     Created         
+    - 2020-01-07 17:33:11   Broken step     In progress             
+    - 2020-01-07 17:33:11   Broken step     Failure         Step should throw exception
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Calculate thread        Success         
     Result: 70
     History: 
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Decrement step          Success
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Non-processable step            Skipped
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Non-processable step            Skipped
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Calculate thread                Success
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Non-processable step            Skipped
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Increment step          Success
-    - 2020-01-07 16:14:35   Decrement step          Success
-    - 2020-01-07 16:14:35   Calculate thread                Success
-
+    - 2020-01-07 17:33:11   Calculate thread        Created         
+    - 2020-01-07 17:33:11   Calculate thread        In progress             
+    - 2020-01-07 17:33:11   Calculate thread        Created         
+    - 2020-01-07 17:33:11   Calculate thread        In progress             
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Decrement step  Created         
+    - 2020-01-07 17:33:11   Decrement step  In progress             
+    - 2020-01-07 17:33:11   Decrement step  Success         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Non-processable step    Created         
+    - 2020-01-07 17:33:11   Non-processable step    Skipped         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Non-processable step    Created         
+    - 2020-01-07 17:33:11   Non-processable step    Skipped         
+    - 2020-01-07 17:33:11   Broken step     Created         
+    - 2020-01-07 17:33:11   Broken step     In progress             
+    - 2020-01-07 17:33:11   Broken step     Failure         Step should throw exception
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Calculate thread        Success         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Non-processable step    Created         
+    - 2020-01-07 17:33:11   Non-processable step    Skipped         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Increment step  Created         
+    - 2020-01-07 17:33:11   Increment step  In progress             
+    - 2020-01-07 17:33:11   Increment step  Success         
+    - 2020-01-07 17:33:11   Decrement step  Created         
+    - 2020-01-07 17:33:11   Decrement step  In progress             
+    - 2020-01-07 17:33:11   Decrement step  Success         
+    - 2020-01-07 17:33:11   Calculate thread        Success 
 
 
 ---

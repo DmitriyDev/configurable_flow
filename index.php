@@ -12,8 +12,10 @@ function logHistory(\Workflow\Interfaces\StateInterface $state)
             $event->getTime()->format('Y-m-d H:i:s') .
             "\t" .
             $event->getEvent()->name() .
-            "\t\t" .
-            $event->getStatus() . "\n";
+            "\t" .
+            $event->getStatus() .
+            "\t \t" .
+            $event->getMessage() . "\n";
 
     }
 }

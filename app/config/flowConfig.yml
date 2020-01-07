@@ -10,6 +10,11 @@ App\Steps\NotProcessedStep: &NotProcessedStep
   class: App\Steps\NotProcessedStep
   dependencies: []
 
+App\Steps\NotProcessedStep: &BrokenStep
+  class: App\Steps\BrokenStep
+  dependencies: []
+
+
 calculate_thread: &calculate_thread
   class: App\Thread\CalculationThread
   context: App\Context\CalculationContextComposite
@@ -20,6 +25,7 @@ calculate_thread: &calculate_thread
     - *NotProcessedStep
     - *IncrementStep
     - *NotProcessedStep
+    - *BrokenStep
     - *IncrementStep
     - *IncrementStep
 

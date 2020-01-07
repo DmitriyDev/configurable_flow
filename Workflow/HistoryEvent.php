@@ -17,11 +17,15 @@ class HistoryEvent
     /** @var \DateTime */
     protected $time;
 
-    public function __construct(ProcessableInterface $event, \DateTime $time, StatusInterface $status)
+    /** @var string */
+    protected $message = '';
+
+    public function __construct(ProcessableInterface $event, \DateTime $time, StatusInterface $status, string $message)
     {
         $this->event = $event;
         $this->time = $time;
         $this->status = $status;
+        $this->message = $message;
     }
 
     public function getEvent(): ProcessableInterface
@@ -37,6 +41,11 @@ class HistoryEvent
     public function getTime(): \DateTime
     {
         return $this->time;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
     }
 
 
