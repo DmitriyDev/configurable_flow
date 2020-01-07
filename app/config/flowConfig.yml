@@ -30,7 +30,25 @@ calculate_thread: &calculate_thread
     - *IncrementStep
 
 
-calculate_thread_two:
+
+App\Steps\BusinessLogicMaximumStep: &BusinessLogicMaximumStep
+  class: App\Steps\BusinessLogicMaximumStep
+  dependencies: []
+
+App\Steps\BusinessLogicMinimumStep: &BusinessLogicMinimumStep
+  class: App\Steps\BusinessLogicMinimumStep
+  dependencies: []
+
+
+business_logic_thread: &business_logic_thread
+  class: App\Thread\BusinessLogicThread
+  context: App\Context\CalculationContextComposite
+  steps:
+    - *BusinessLogicMaximumStep
+    - *BusinessLogicMinimumStep
+
+
+calculate_with_business_logic_thread: &calculate_with_business_logic_thread
   class: App\Thread\CalculationThread
   context: App\Context\CalculationContextComposite
   steps:
@@ -40,4 +58,37 @@ calculate_thread_two:
     - *NotProcessedStep
     - *IncrementStep
     - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
     - *DecrementStep
+    - *business_logic_thread
+
+
+max_calculate_with_business_logic_thread: &calculate_with_business_logic_thread
+  class: App\Thread\CalculationThread
+  context: App\Context\CalculationContextComposite
+  steps:
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *IncrementStep
+    - *business_logic_thread
+
+min_calculate_with_business_logic_thread: &calculate_with_business_logic_thread
+  class: App\Thread\CalculationThread
+  context: App\Context\CalculationContextComposite
+  steps:
+    - *DecrementStep
+    - *DecrementStep
+    - *DecrementStep
+    - *business_logic_thread

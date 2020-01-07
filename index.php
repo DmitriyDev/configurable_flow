@@ -1,6 +1,7 @@
 <?php
 include_once 'autoload.php';
 
+use App\State\CalculationState;
 use App\ThreadFactory;
 
 
@@ -39,7 +40,7 @@ echo "History: \n";
 logHistory($state);
 
 $state = new App\State\CalculationState();
-$thread = $threadFactory->getThreadByName("calculate_thread_two", $context);
+$thread = $threadFactory->getThreadByName("calculate_with_business_logic_thread", $context);
 $thread->run($state);
 
 echo "Result: ".$state->getValue() . "\n";

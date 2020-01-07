@@ -43,6 +43,11 @@ Response as a state
       class: App\Steps\NotProcessedStep
       dependencies: []
     
+    App\Steps\NotProcessedStep: &BrokenStep
+      class: App\Steps\BrokenStep
+      dependencies: []
+    
+    
     calculate_thread: &calculate_thread
       class: App\Thread\CalculationThread
       context: App\Context\CalculationContextComposite
@@ -57,8 +62,24 @@ Response as a state
         - *IncrementStep
         - *IncrementStep
     
+    App\Steps\BusinessLogicMaximumStep: &BusinessLogicMaximumStep
+      class: App\Steps\BusinessLogicMaximumStep
+      dependencies: []
     
-    calculate_thread_two:
+    App\Steps\BusinessLogicMinimumStep: &BusinessLogicMinimumStep
+      class: App\Steps\BusinessLogicMinimumStep
+      dependencies: []
+    
+    
+    business_logic_thread: &business_logic_thread
+      class: App\Thread\BusinessLogicThread
+      context: App\Context\CalculationContextComposite
+      steps:
+        - *BusinessLogicMaximumStep
+        - *BusinessLogicMinimumStep
+    
+    
+    calculate_with_business_logic_thread: &calculate_with_business_logic_thread
       class: App\Thread\CalculationThread
       context: App\Context\CalculationContextComposite
       steps:
@@ -68,7 +89,40 @@ Response as a state
         - *NotProcessedStep
         - *IncrementStep
         - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
         - *DecrementStep
+        - *business_logic_thread
+    
+    max_calculate_with_business_logic_thread: &calculate_with_business_logic_thread
+      class: App\Thread\CalculationThread
+      context: App\Context\CalculationContextComposite
+      steps:
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *business_logic_thread
+    
+    min_calculate_with_business_logic_thread: &calculate_with_business_logic_thread
+      class: App\Thread\CalculationThread
+      context: App\Context\CalculationContextComposite
+      steps:
+        - *DecrementStep
+        - *DecrementStep
+        - *DecrementStep
+        - *business_logic_thread
+
 
 
 
@@ -178,6 +232,224 @@ Output:
     - 2020-01-07 17:33:11   Decrement step  In progress             
     - 2020-01-07 17:33:11   Decrement step  Success         
     - 2020-01-07 17:33:11   Calculate thread        Success 
+
+
+---
+
+**Examples:** 
+
+config: 
+    
+    max_calculate_with_business_logic_thread: &calculate_with_business_logic_thread
+      class: App\Thread\CalculationThread
+      context: App\Context\CalculationContextComposite
+      steps:
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *business_logic_thread
+
+
+result:
+    
+     === Start Thread === 
+    Result: 100
+    History: 
+    - 2020-01-07 19:42:55   Calculate thread        Created         
+    - 2020-01-07 19:42:55   Calculate thread        In progress             
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Increment step  Created         
+    - 2020-01-07 19:42:55   Increment step  In progress             
+    - 2020-01-07 19:42:55   Increment step  Success         
+    - 2020-01-07 19:42:55   Business logic thread   Created         
+    - 2020-01-07 19:42:55   Business logic thread   In progress             
+    - 2020-01-07 19:42:55   Business logic (Max) step       Created         
+    - 2020-01-07 19:42:55   Business logic (Max) step       In progress             
+    - 2020-01-07 19:42:55   Business logic (Max) step       Success         
+    - 2020-01-07 19:42:55   Business logic (Min) step       Created         
+    - 2020-01-07 19:42:55   Business logic (Min) step       In progress             
+    - 2020-01-07 19:42:55   Business logic (Min) step       Success         
+    - 2020-01-07 19:42:55   Business logic thread   Success         
+    - 2020-01-07 19:42:55   Calculate thread        Success  
+--
+
+config: 
+    
+    min_calculate_with_business_logic_thread: &calculate_with_business_logic_thread
+      class: App\Thread\CalculationThread
+      context: App\Context\CalculationContextComposite
+      steps:
+        - *DecrementStep
+        - *DecrementStep
+        - *DecrementStep
+        - *business_logic_thread
+
+result:
+
+     === Start Thread === 
+    Result: 0
+    History: 
+    - 2020-01-07 19:41:43   Calculate thread        Created         
+    - 2020-01-07 19:41:43   Calculate thread        In progress             
+    - 2020-01-07 19:41:43   Decrement step  Created         
+    - 2020-01-07 19:41:43   Decrement step  In progress             
+    - 2020-01-07 19:41:43   Decrement step  Success         
+    - 2020-01-07 19:41:43   Decrement step  Created         
+    - 2020-01-07 19:41:43   Decrement step  In progress             
+    - 2020-01-07 19:41:43   Decrement step  Success         
+    - 2020-01-07 19:41:43   Decrement step  Created         
+    - 2020-01-07 19:41:43   Decrement step  In progress             
+    - 2020-01-07 19:41:43   Decrement step  Success         
+    - 2020-01-07 19:41:43   Business logic thread   Created         
+    - 2020-01-07 19:41:43   Business logic thread   In progress             
+    - 2020-01-07 19:41:43   Business logic (Max) step       Created         
+    - 2020-01-07 19:41:43   Business logic (Max) step       In progress             
+    - 2020-01-07 19:41:43   Business logic (Max) step       Success         
+    - 2020-01-07 19:41:43   Business logic (Min) step       Created         
+    - 2020-01-07 19:41:43   Business logic (Min) step       In progress             
+    - 2020-01-07 19:41:43   Business logic (Min) step       Success         
+    - 2020-01-07 19:41:43   Business logic thread   Success         
+    - 2020-01-07 19:41:43   Calculate thread        Success  
+
+--
+
+config:
+
+    calculate_with_business_logic_thread: &calculate_with_business_logic_thread
+      class: App\Thread\CalculationThread
+      context: App\Context\CalculationContextComposite
+      steps:
+        - *calculate_thread
+        - *IncrementStep
+        - *IncrementStep
+        - *NotProcessedStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *IncrementStep
+        - *DecrementStep
+        - *business_logic_thread
+
+
+result:
+
+     === Start Thread === 
+    Result: 100
+    History: 
+    - 2020-01-07 19:45:59   Calculate thread        Created         
+    - 2020-01-07 19:45:59   Calculate thread        In progress             
+    - 2020-01-07 19:45:59   Calculate thread        Created         
+    - 2020-01-07 19:45:59   Calculate thread        In progress             
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Decrement step  Created         
+    - 2020-01-07 19:45:59   Decrement step  In progress             
+    - 2020-01-07 19:45:59   Decrement step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Non-processable step    Created         
+    - 2020-01-07 19:45:59   Non-processable step    Skipped         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Non-processable step    Created         
+    - 2020-01-07 19:45:59   Non-processable step    Skipped         
+    - 2020-01-07 19:45:59   Broken step     Created         
+    - 2020-01-07 19:45:59   Broken step     In progress             
+    - 2020-01-07 19:45:59   Broken step     Failure         Step should throw exception
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Calculate thread        Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Non-processable step    Created         
+    - 2020-01-07 19:45:59   Non-processable step    Skipped         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Increment step  Created         
+    - 2020-01-07 19:45:59   Increment step  In progress             
+    - 2020-01-07 19:45:59   Increment step  Success         
+    - 2020-01-07 19:45:59   Decrement step  Created         
+    - 2020-01-07 19:45:59   Decrement step  In progress             
+    - 2020-01-07 19:45:59   Decrement step  Success         
+    - 2020-01-07 19:45:59   Business logic thread   Created         
+    - 2020-01-07 19:45:59   Business logic thread   In progress             
+    - 2020-01-07 19:45:59   Business logic (Max) step       Created         
+    - 2020-01-07 19:45:59   Business logic (Max) step       In progress             
+    - 2020-01-07 19:45:59   Business logic (Max) step       Success         
+    - 2020-01-07 19:45:59   Business logic (Min) step       Created         
+    - 2020-01-07 19:45:59   Business logic (Min) step       In progress             
+    - 2020-01-07 19:45:59   Business logic (Min) step       Success         
+    - 2020-01-07 19:45:59   Business logic thread   Success         
+    - 2020-01-07 19:45:59   Calculate thread        Success  
+
+
 
 
 ---

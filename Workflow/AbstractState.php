@@ -12,12 +12,18 @@ abstract class AbstractState implements StateInterface
 
     function history(): array
     {
-       return $this->history;
+        return $this->history;
     }
 
     function appendToHistory(HistoryEvent $event): void
     {
-       $this->history[] = $event;
+        $this->history[] = $event;
+    }
+
+    /** @param HistoryEvent[] $historyLog */
+    function mergeHistory(array $historyLog): void
+    {
+        $this->history = \array_merge($this->history, $historyLog);
     }
 
 
