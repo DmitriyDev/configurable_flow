@@ -3,10 +3,12 @@
 namespace Workflow\Interfaces;
 
 
+use Workflow\HistoryEvent;
+
 interface StateInterface
 {
-    function history();
+    function history(): array ;
 
-    function appendToHistory();
+    function appendToHistory(HistoryEvent $event): void;
 
 }

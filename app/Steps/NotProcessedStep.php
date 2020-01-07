@@ -9,9 +9,9 @@ use Workflow\Interfaces\ContextInterface;
 use Workflow\AbstractStep;
 use Workflow\Interfaces\StateInterface;
 
-class IncrementStep extends AbstractStep
+class NotProcessedStep extends AbstractStep
 {
-    protected const NAME = 'Increment step';
+    protected const NAME = 'Non-processable step';
 
     /** @return CalculationContextComposite */
     public function context(): ContextInterface
@@ -28,11 +28,12 @@ class IncrementStep extends AbstractStep
     /** @param CalculationState $state */
     protected function mainProcess(StateInterface $state): void
     {
+        throw new \Exception("The step process must be skipped");
+    }
 
-        $stepValue = $this->context()->getStepValue();
-        $newValue = $state->getValue() + $stepValue;
-        $state->setValue($newValue);
-
+    public function shouldRun(StateInterface $state): bool
+    {
+        return false;
     }
 
 

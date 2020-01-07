@@ -10,7 +10,6 @@ $autoload = [
     'Workflow\Interfaces\\' => 'Workflow/Interfaces/',
     'Workflow\\' => 'Workflow/',
     'App\\' => 'app/',
-    'App\\' => 'app/',
 ];
 
 

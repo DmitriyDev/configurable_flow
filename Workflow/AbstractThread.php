@@ -5,18 +5,11 @@ namespace Workflow;
 use Workflow\Interfaces\ContextInterface;
 use Workflow\Interfaces\StateInterface;
 use Workflow\Interfaces\ThreadInterface;
-use Workflow\Interfaces\StatusInterface;
 use Workflow\Interfaces\StepInterface;
 
 
 abstract class AbstractThread extends AbstractProcessable implements ThreadInterface
 {
-
-    /** @var ContextInterface */
-    protected $context;
-
-    /** @var StatusInterface */
-    protected $status;
 
     /** @var StepInterface[] */
     protected $steps;
@@ -48,7 +41,8 @@ abstract class AbstractThread extends AbstractProcessable implements ThreadInter
         {
             $step->run($state);
         }
-
     }
+
+
 
 }

@@ -19,11 +19,9 @@ class DecrementStep extends AbstractStep
         return $this->context;
     }
 
-    protected function validateState(StateInterface $state): void
+    protected function validState(StateInterface $state): bool
     {
-        if (!$state instanceof CalculationState) {
-            throw new \Exception("DecrementStep works with " . CalculationState::class . " only");
-        }
+        return $state instanceof CalculationState;
     }
 
 

@@ -79,15 +79,41 @@ Here we can see that `calculate_thread` contains only threads, but `calculate_th
 
 Output: 
 
-    /var/www/app/index.php:19:
-    int(40)
-    /var/www/app/index.php:26:
-    int(70)
+     === Start Thread === 
+    Result: 40
+    History: 
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Decrement step          Success
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Non-processable step            Skipped
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Non-processable step            Skipped
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Calculate thread                Success
+    Result: 70
+    History: 
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Decrement step          Success
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Non-processable step            Skipped
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Non-processable step            Skipped
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Calculate thread                Success
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Non-processable step            Skipped
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Increment step          Success
+    - 2020-01-07 16:14:35   Decrement step          Success
+    - 2020-01-07 16:14:35   Calculate thread                Success
+
 
 
 ---
 Functionality in progress:
-- history log
 - dependency injection
 - rollback functionality
 - error handling

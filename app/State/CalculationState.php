@@ -2,22 +2,11 @@
 
 namespace App\State;
 
-use Workflow\Interfaces\StateInterface;
+use Workflow\AbstractState;
 
-class CalculationState implements StateInterface
+class CalculationState extends AbstractState
 {
     private $value = 0;
-
-    function history()
-    {
-        // TODO: Implement history() method.
-    }
-
-    function appendToHistory()
-    {
-        // TODO: Implement appendToHistory() method.
-    }
-
 
     public function getValue(): int
     {

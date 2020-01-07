@@ -6,6 +6,9 @@ App\Steps\DecrementStep: &DecrementStep
   class: App\Steps\DecrementStep
   dependencies: []
 
+App\Steps\NotProcessedStep: &NotProcessedStep
+  class: App\Steps\NotProcessedStep
+  dependencies: []
 
 calculate_thread: &calculate_thread
   class: App\Thread\CalculationThread
@@ -14,7 +17,9 @@ calculate_thread: &calculate_thread
     - *IncrementStep
     - *DecrementStep
     - *IncrementStep
+    - *NotProcessedStep
     - *IncrementStep
+    - *NotProcessedStep
     - *IncrementStep
     - *IncrementStep
 
@@ -26,6 +31,7 @@ calculate_thread_two:
     - *calculate_thread
     - *IncrementStep
     - *IncrementStep
+    - *NotProcessedStep
     - *IncrementStep
     - *IncrementStep
     - *DecrementStep

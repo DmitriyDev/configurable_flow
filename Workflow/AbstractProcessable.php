@@ -18,12 +18,12 @@ abstract class AbstractProcessable implements ProcessableInterface
     /** @var StatusInterface */
     protected $status;
 
-    public function name(): string
+    final public function name(): string
     {
         return static::NAME;
     }
 
-    public function status(): StatusInterface
+    final public function status(): StatusInterface
     {
         return $this->status;
     }
@@ -39,7 +39,7 @@ abstract class AbstractProcessable implements ProcessableInterface
         return true;
     }
 
-    abstract protected function validateState(StateInterface $state): void;
+    abstract protected function validState(StateInterface $state): bool;
 
     protected function preRun(StateInterface $state): void
     {
@@ -56,23 +56,29 @@ abstract class AbstractProcessable implements ProcessableInterface
     final public function run(StateInterface $state): void
     {
         try {
-            $this->validateState($state);
-
-            if (!$this->shouldRun($state)) {
-                $this->status = Status::skipped();
-                return;
-
+            if(!$this->validState($state))
+            {
+                throw new \Exception("Invalid state received");
             }
 
-            $this->preRun($state);
-            $this->status = Status::inProgress();
-            $this->mainProcess($state);
-            $this->status = Status::success();
-            $this->postRun($state);
+            if ($this->shouldRun($state)) {
+                $this->status = Status::inProgress();
+                $this->preRun($state);
+                $this->mainProcess($state);
+                $this->postRun($state);
+                $this->status = Status::success();
+            } else {
+                $this->status = Status::skipped();
+            }
         } catch (\Throwable $e) {
             $this->status = Status::failure();
         }
 
+        $event = new HistoryEvent($this, new \DateTime(), $this->status);
+
+        $state->appendToHistory($event);
+
     }
+
 
 }
