@@ -83,3 +83,12 @@ Output:
     int(40)
     /var/www/app/index.php:26:
     int(70)
+
+
+---
+Functionality in progress:
+- history log
+- dependency injection
+- rollback functionality
+- error handling
+- more examples of usage
