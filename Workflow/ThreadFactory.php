@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Workflow;
 
 use Workflow\Interfaces\ContextInterface;
 use Workflow\Interfaces\ProcessableInterface;
@@ -17,7 +17,7 @@ class ThreadFactory
     /** @var array */
     private $config = [];
 
-    function __construct(string $configFile = null)
+    public function __construct(string $configFile = null)
     {
         $this->config = $this->getConfig($configFile);
     }

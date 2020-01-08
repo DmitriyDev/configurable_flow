@@ -1,8 +1,7 @@
 <?php
-include_once 'autoload.php';
+include_once 'vendor/autoload.php';
 
-use App\State\CalculationState;
-use App\ThreadFactory;
+use Workflow\ThreadFactory;
 
 
 function logHistory(\Workflow\Interfaces\StateInterface $state)

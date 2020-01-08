@@ -7,8 +7,12 @@ use Workflow\HistoryEvent;
 
 interface StateInterface
 {
-    function history(): array ;
+    /** @return HistoryEvent[] */
+    public function history(): array;
 
-    function appendToHistory(HistoryEvent $event): void;
+    public function appendToHistory(HistoryEvent $event): void;
+
+    /** @param HistoryEvent[] $event */
+    public function mergeHistory(array $event): void;
 
 }

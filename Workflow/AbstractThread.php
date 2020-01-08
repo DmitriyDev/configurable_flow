@@ -22,7 +22,8 @@ abstract class AbstractThread extends AbstractProcessable implements ThreadInter
     }
 
 
-    public function steps(): array
+    /** @return StepInterface[] */
+    final public function steps(): array
     {
         return $this->steps;
     }
@@ -37,12 +38,10 @@ abstract class AbstractThread extends AbstractProcessable implements ThreadInter
     protected function mainProcess(StateInterface $state): void
     {
         /** @var StepInterface $step */
-        foreach ($this->nextStep() as $step)
-        {
+        foreach ($this->nextStep() as $step) {
             $step->run($state);
         }
     }
-
 
 
 }

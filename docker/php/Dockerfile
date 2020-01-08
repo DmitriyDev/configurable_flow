@@ -10,7 +10,13 @@ RUN docker-php-ext-enable apcu
 RUN docker-php-ext-enable yaml
 
 
-ARG WITH_XDEBUG=true
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --filename=composer \
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer /usr/local/bin/composer
+
+ARG WITH_XDEBUG=false
 
 RUN if [ $WITH_XDEBUG = "true" ] ; then \
         pecl install xdebug; \
@@ -30,3 +36,5 @@ RUN if [ $WITH_XDEBUG = "true" ] ; then \
 WORKDIR /var/www/app/
 
 COPY . /var/www/app/
+
+RUN composer install
